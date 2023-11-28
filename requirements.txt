@@ -1,0 +1,4 @@
+Flask==2.0.1
+Flask-Cors==3.0.10
+tensorflow==2.7.0
+numpy==1.21.4

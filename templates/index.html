@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Add your meta tags, title, and CSS links here -->
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+    <style>
+      #imageupload {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Image Classification</h1>
+    <img src="#" id="preview" />
+    <br />
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <label for="imageupload">Image Upload</label>
+      <input type="file" id="imageupload" accept="image/*" name="imageFile" />
+      <input type="submit" value="Upload " />
+    </form>
+    
+    <script>
+      const preview = document.getElementById("preview");
+      const upload = document.getElementById("imageupload");
+      upload.onchange = function () {
+        preview.src = URL.createObjectURL(upload.files[0]);
+      };
+    </script>
+  </body>
+</html>

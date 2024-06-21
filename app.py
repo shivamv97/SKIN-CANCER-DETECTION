@@ -4,13 +4,26 @@ import tensorflow as tf
 import numpy as np
 import os
 
+
+
 app = Flask(__name__, template_folder='templates')
 CORS(app)
+
+classes={
+    0:('nv', 'Melanocytic nevi'),
+    1:('mel', 'Melanoma'),
+    2:('bkl', 'benign keratosis-like lesions'),
+    3:('bcc', 'Basal cell carcinoma'),
+    4:('akiec','Actinic keratoses'),
+    5:('vasc', ' pyogenic granulomas and hemorrhage'),
+    6:('df', 'Dermatofibroma'),
+}
 # Define the path to the model.h5 file
-model_path = "model.h5"
+model_path = r"model.h5"
 
 # Load the pre-trained model
 model = tf.keras.models.load_model(model_path)
+#The model is a neural network trained to classify skin lesions into different classes.
 
 # Define a temporary directory to store uploaded files
 UPLOAD_FOLDER = 'uploads'
@@ -50,13 +63,21 @@ def upload_file():
 
     # Make predictions
     predictions = model.predict(img_array)
-    predictions_as_list = predictions.tolist()
+    #The model.predict method is used to obtain predictions for the preprocessed image.
+    
+    # Get the index of the class with the highest probability
+    predicted_class_index = np.argmax(predictions)
+
+    # Get the label name of the predicted class
+    predicted_class_label = classes[predicted_class_index][1]
+    predicted_class_label = classes[predicted_class_index][1]
 
     # Delete the temporary file
     os.remove(file_path)
 
     response_data = {
-        'predictions': predictions_as_list
+        'predicted_class': predicted_class_label,
+        #'predictions': predictions.tolist()
     }
 
     return jsonify(response_data)

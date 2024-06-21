@@ -1,30 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Add your meta tags, title, and CSS links here -->
-    <!-- <link rel="stylesheet" href="style.css" /> -->
-    <style>
-      #imageupload {
-        display: none;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Image Classification</h1>
-    <img src="#" id="preview" />
-    <br />
+
+<head>
+  <!-- Add your meta tags, title, and CSS links here -->
+  <!-- <link rel="stylesheet" href="style.css" /> -->
+  <style>
+    #imageupload {
+      display: none;
+    }
+
+    header {
+      background-color: #333;
+      text-align: center;
+      color: white;
+      padding: 20px;
+    }
+
+    .img2 {
+      padding-top: 5%;
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Skin Cancer Detection System</h1>
+  </header>
+  
+  <div class="img2">
+    <img
+      src="data:image/png;base64,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"
+      id="preview" />
+  </div>
+  <br>
+  <center>
     <form action="/upload" method="post" enctype="multipart/form-data">
-      <label for="imageupload">Image Upload</label>
+      <label for="imageupload">Choose File</label>
       <input type="file" id="imageupload" accept="image/*" name="imageFile" />
-      <input type="submit" value="Upload " />
+      <input type="submit" value="Predict " />
     </form>
-    
-    <script>
-      const preview = document.getElementById("preview");
-      const upload = document.getElementById("imageupload");
-      upload.onchange = function () {
-        preview.src = URL.createObjectURL(upload.files[0]);
-      };
-    </script>
-  </body>
+  </center>
+  <script>
+    const preview = document.getElementById("preview");
+    const upload = document.getElementById("imageupload");
+    upload.onchange = function () {
+      preview.src = URL.createObjectURL(upload.files[0]);
+    };
+  </script>
+</body>
+
 </html>
